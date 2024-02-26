@@ -32,7 +32,7 @@ sample(poss.esiti,size = 20, replace = TRUE, prob = prob.associate)
 
 # generare una beta(2,2) con il metodo del rigetto 
 
-n <- 100 00 # taglia del campione di X
+n <- 10000 # taglia del campione di X
 k <- 0 # contatore per monitorare il ciclo while
 k.2 <- 0 # conta quanti cicli sono stati effettuati
 
