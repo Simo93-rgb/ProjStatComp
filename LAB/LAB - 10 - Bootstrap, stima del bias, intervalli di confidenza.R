@@ -68,3 +68,13 @@ alpha <- 0.05
 theta.hat
 # IC percentile
 quantile(theta.b, c(alpha/2, 1-alpha/2))
+# IC normale
+alpha <- c(0.025, 0.975)
+ic <- theta.hat + qnorm(alpha) * sd(theta.b)
+print(ic)
+#Coverage
+cov <- mean(theta.hat > ic[1] & theta.hat < ic[2])
+
+
+
+
