@@ -102,3 +102,4 @@ p <- mean(c(theta.hat, repliche.test) >= theta.hat)
 hist(repliche.test, main = "", freq = FALSE, 
      xlab = paste(c("T (p = ", 2*p ," )"), collapse = ""), breaks = 20)
 points(theta.hat, 0, cex = 1, pch = 16) # valore osservato della statistica
+
