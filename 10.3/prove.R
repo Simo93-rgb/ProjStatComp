@@ -1,0 +1,17 @@
+source("10.2/cvm.R")
+
+attach(chickwts)
+boxplot(formula(chickwts))
+soybean_sorted <- sort(as.vector(weight[feed == "soybean"]))
+soybean <- (weight[feed == "soybean"])
+casein <- (weight[feed == "casein"])
+linseed <- (weight[feed == "linseed"])
+linseed_sorted <- sort(as.vector(weight[feed == "linseed"]))
+sunflower_sorted <- sort(as.vector(weight[feed == "sunflower"]))
+detach(chickwts)
+
+r <- rnorm(50)
+r_sorted <- sort(as.vector(r))
+distanza <- cramer_von_mises(casein, casein)
+distanza <- cramer_von_mises(r_sorted, r_sorted)
+cbind(rank(r),rank(r_sorted))

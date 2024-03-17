@@ -1,31 +1,6 @@
-#10.2 Cramér-Von Mises
+#10.2 Cramér-Von Mises####
 
-cramer_von_mises <- function(sample_x, sample_y) {
-  # Lunghezza del campione X
-  n <- length(sample_x)
-  # Lunghezza del campione Y
-  m <- length(sample_y)
-  
-  # Creazione del rango di X e di Y
-  # Per fare i ranghi si guarda la posizione dei valori di un vettore ordinato 
-  # ma questo è temporaneo, non va a cambiare la posizione originale degli 
-  # elementi. Quindi, io so che i primi n elementi sono tutti i ranghi di X e
-  # gli ultimi m elementi sono tutti elementi di Y
-  ranked_sample <- rank(c(sample_x, sample_y))
-  rank_x <- ranked_sample[1:n]
-  rank_y <- ranked_sample[n+1:m]
-  
-  
-  # Richiesta computazione dall'esercizio 
-  # Rappresenta la differenza fra i ranghi osservati e quelli teorici
-  # Ci mostra la discrepanza che c'è fra le 
-  U <- n * sum( (rank_x-(1:n))^2 ) + m * sum( (rank_y-(1:m))^2 )
-  
-  # Distanza delle distribuzioni
-  W_squared <- U / ( n*m*(n+m) ) - ( (4*n*m) -1 ) / ( 6*(n+m) ) 
-  
-  return (W_squared)
-}
+source("10.2/cvm.R")
 
 # Caricamento dataset dei pulcini
 attach(chickwts)
@@ -33,8 +8,20 @@ boxplot(formula(chickwts))
 soybean <- sort(as.vector(weight[feed == "soybean"]))
 casein <- sort(as.vector(weight[feed == "casein"]))
 linseed <- sort(as.vector(weight[feed == "linseed"]))
+sunflower <- sort(as.vector(weight[feed == "sunflower"]))
 detach(chickwts)
+length(linseed)
+length(sunflower)
+# Caricamento del dataset PlantGrowth
+attach(PlantGrowth)
+boxplot(formula(PlantGrowth))
 
+# Suddivisione del dataset in base ai gruppi di trattamento
+ctrl_group <- PlantGrowth$weight[PlantGrowth$group == 'ctrl']
+trt1_group <- PlantGrowth$weight[PlantGrowth$group == 'trt1']
+trt2_group <- PlantGrowth$weight[PlantGrowth$group == 'trt2']
+
+detach(PlantGrowth)
 # definito molto elevato immaginando uno studio esplorativo che mi permette 
 # tolleranza agli errori del primo tipo, anche detti falsi negativi
 alpha <- 0.18

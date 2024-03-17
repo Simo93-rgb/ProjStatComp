@@ -74,16 +74,17 @@ attach(chickwts)
 boxplot(formula(chickwts))
 x <- sort(as.vector(weight[feed == "soybean"]))
 y <- sort(as.vector(weight[feed == "linseed"]))
+
 detach(chickwts)
 
-x
-y
+length(x)
+length(y)
 ###
 t.test(x,y)  # test sulle medie dei due gruppi (distribuzioni assunte gaussiane)
 theta.hat <- t.test(x,y)$statistic
 ###
-
-R <- 999 #numero di repliche + quello osservato = 1000
+theta.hat
+R <- 10 #numero di repliche + quello osservato = 1000
 z <- c(x, y) #campione congiunto
 K <- 1:length(z) # indici del campione congiunto che uso per le permutazioni
 repliche.test <- NULL
@@ -98,8 +99,8 @@ for (i in 1:R) {
   repliche.test[i] <- t.test(x1, y1)$statistic 
 }
 p <- mean(c(theta.hat, repliche.test) >= theta.hat)
-
-hist(repliche.test, main = "", freq = FALSE, 
+c(theta.hat, repliche.test)
+hist(repliche.test, main = "chickwts", freq = FALSE,
      xlab = paste(c("T (p = ", 2*p ," )"), collapse = ""), breaks = 20)
 points(theta.hat, 0, cex = 1, pch = 16) # valore osservato della statistica
 
