@@ -4,16 +4,16 @@ cramer_von_mises <- function(sample_x, sample_y) {
   # Lunghezza del campione Y
   m <- length(sample_y)
 
-  # Creazione del rango di X e di Y
-  # Per fare i ranghi si guarda la posizione dei valori di un vettore ordinato
-  # ma questo è temporaneo, non va a cambiare la posizione originale degli
-  # elementi. Quindi, io so che i primi n elementi sono tutti i ranghi di X e
-  # gli ultimi m elementi sono tutti elementi di Y
+  # unisco i campioni
   combinati <- c(sample_x, sample_y)
+  # faccio un rango congiunto
   ranked_sample <- rank(combinati)
+  # separo i ranghi
   rank_x <- ranked_sample[1:n]
   rank_y <- ranked_sample[(n+1):(n+m)]
 
+  # Scommentare se serve parlare dei ranghi
+  # print(cbind(sample_x, rank_x,sample_y, rank_y))
 
   # Rappresenta la differenza fra i ranghi osservati e quelli teorici
   U <- n * sum( (rank_x-(1:n))^2 ) + m * sum( (rank_y-(1:m))^2 )
@@ -23,3 +23,4 @@ cramer_von_mises <- function(sample_x, sample_y) {
 
   return (W_squared)
 }
+

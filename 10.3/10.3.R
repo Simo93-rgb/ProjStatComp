@@ -16,9 +16,12 @@ cvm_permutation_test <- function(sample_x, sample_y, n_permutations = 999) {
 
   # Esecuzione delle permutazioni e calcolo di W^2 per ciascuna
   for (i in 1:n_permutations) {
-    permuted_samples <- sample(combined_samples, replace = FALSE)
-    permuted_x <- permuted_samples[1:n_x]
-    permuted_y <- permuted_samples[(n_x + 1):(n_x + n_y)]
+    # permuted_samples <- sample(combined_samples, replace = FALSE)
+    permuted_samples <- sample((n_x+n_y),size = n_x, replace = FALSE)
+    # permuted_x <- permuted_samples[1:n_x]
+    permuted_x <- combined_samples[permuted_samples]
+    # permuted_y <- permuted_samples[(n_x + 1):(n_x + n_y)]
+    permuted_y <- combined_samples[-permuted_samples]
     W_squared_permutations[i] <- cramer_von_mises(permuted_x, permuted_y)
   }
 
@@ -41,14 +44,10 @@ cvm_permutation_test <- function(sample_x, sample_y, n_permutations = 999) {
   list(W_squared_observed = W_squared_observed, p_value = p_value)
 }
 
-# Utilizza la funzione su un set di dati di esempio
-# Supponiamo di avere i campioni 'sample_x' e 'sample_y' già definiti
-# Ad esempio, utilizzando il dataset PlantGrowth come prima
 # Caricamento del dataset PlantGrowth
 attach(PlantGrowth)
 boxplot(formula(PlantGrowth))
 
-# Suddivisione del dataset in base ai gruppi di trattamento
 ctrl_group <- sort(weight[group == 'ctrl'])
 trt1_group <- sort(weight[group == 'trt1'])
 trt2_group <- sort(weight[group == 'trt2'])
@@ -58,25 +57,20 @@ detach(PlantGrowth)
 # Caricamento dataset dei pulcini
 attach(chickwts)
 boxplot(formula(chickwts))
-soybean_sorted <- sort(as.vector(weight[feed == "soybean"]))
-soybean <- (weight[feed == "soybean"])
-casein <- (weight[feed == "casein"])
-casein_sorted <- sort(weight[feed == "casein"])
-linseed <- (weight[feed == "linseed"])
-linseed_sorted <- sort(as.vector(weight[feed == "linseed"]))
-sunflower_sorted <- sort(as.vector(weight[feed == "sunflower"]))
+
+soybean <- sort(as.vector(weight[feed == "soybean"]))
+casein <- sort(as.vector(weight[feed == "casein"]))
+linseed <- sort(as.vector(weight[feed == "linseed"]))
+sunflower <- sort(as.vector(weight[feed == "sunflower"]))
+
 detach(chickwts)
+
+
 # Esecuzione del test di permutazione Cramér-von Mises
-result_sorted <- cvm_permutation_test(linseed_sorted, soybean_sorted, 999)
-result <- cvm_permutation_test(linseed, soybean, 999)
-cbind(result, result_sorted)
-result <- cvm_permutation_test(linseed, linseed, 999)
-result <- cvm_permutation_test(casein, casein, 999)
-result <- cvm_permutation_test(ctrl_group, trt1_group, 999)
-result <- cvm_permutation_test(ctrl_group, trt2_group, 999)
-result <- cvm_permutation_test(trt1_group, trt2_group, 999)
-result <- cvm_permutation_test(linseed, trt2_group, 999)
-result <- cvm_permutation_test(rnorm(100), rnorm(100))
+result <- cvm_permutation_test(linseed, linseed)
+result <- cvm_permutation_test(linseed, soybean)
+result <- cvm_permutation_test(trt1_group, trt2_group)
+
 # Stampa del risultato
 cat("W^2 osservato:", result$W_squared_observed, "\n")
 cat("p-value:", result$p_value, "\n")
