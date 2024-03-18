@@ -12,7 +12,7 @@ detach(chickwts)
 
 r <- rnorm(50)
 r_sorted <- sort(as.vector(r))
-distanza <- cramer_von_mises(linseed, casein)
+distanza <- cramer_von_mises(soybean_sorted, soybean_sorted)
 distanza <- cramer_von_mises(linseed, linseed)
 distanza <- cramer_von_mises(linseed_sorted, linseed_sorted)
 distanza <- cramer_von_mises(r_sorted, r_sorted)

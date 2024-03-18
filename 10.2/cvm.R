@@ -1,4 +1,6 @@
 cramer_von_mises <- function(sample_x, sample_y) {
+  sample_x <- sort(as.vector(sample_x))
+  sample_y <- sort(as.vector(sample_y))
   # Lunghezza del campione X
   n <- length(sample_x)
   # Lunghezza del campione Y
