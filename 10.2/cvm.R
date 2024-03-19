@@ -1,7 +1,11 @@
 library(ggplot2) # Carica la libreria per utilizzarla
 cramer_von_mises <- function(sample_x, sample_y, plotting = FALSE, save_plot = F ,name_plot="") {
+  # Siccome non ho garanzia che i campini siano ordinati la prima cosa
+  # che faccio è un sort
+  # siccome cvm lavora con le cdf ho necessità che siano ordinati
   sample_x <- sort(as.vector(sample_x))
   sample_y <- sort(as.vector(sample_y))
+
   # Lunghezza del campione X
   n <- length(sample_x)
   # Lunghezza del campione Y

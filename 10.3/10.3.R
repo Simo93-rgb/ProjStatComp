@@ -7,9 +7,11 @@ source("Datasets/chickwts.R")
 
 # Esecuzione del test di permutazione Cramér-von Mises
 result <- cvm_permutation_test(linseed, linseed)
-result <- cvm_permutation_test(linseed, soybean,
-                               plotting = T)
-result <- cvm_permutation_test(trt1_group, trt2_group)
+result <- cvm_permutation_test(linseed, soybean, plotting = T)
+result <- cvm_permutation_test(trt1_group, trt2_group,
+                               plotting = T,
+                               save_plot = T,
+                               name_plot = "plant_trt1_trt2")
 
 # Stampa del risultato
 cat("W^2 osservato:", result$W_squared_observed, "\n")
