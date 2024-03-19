@@ -5,7 +5,8 @@
 #Esempio 1: Esponenziale####
 # 1. Genero un insieme di uniformi iid come U(0,1)
 taglia.campionaria <- 1000
-uniformi <- runif(taglia.campionaria)
+# uniformi <- runif(taglia.campionaria)
+uniformi <- sample(seq(0,1, by=0.000001),taglia.campionaria,replace = T)
 # 2. definisco theta come la soluzione analitica dell'integrale in [0,1]
 theta <- 1-exp(-1)
 # 3. calcolo theta cappello. 
