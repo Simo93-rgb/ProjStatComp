@@ -1,8 +1,7 @@
-library(ggplot2) # Carica la libreria per utilizzarla
-cramer_von_mises <- function(sample_x, sample_y, plotting = FALSE, save_plot = F ,name_plot="") {
+library(ggplot2)
+cramer_von_mises <- function(sample_x, sample_y, plotting = FALSE, save_plot = F, name_plot = "") {
   # Siccome non ho garanzia che i campini siano ordinati la prima cosa
   # che faccio è un sort
-  # siccome cvm lavora con le cdf ho necessità che siano ordinati
   sample_x <- sort(as.vector(sample_x))
   sample_y <- sort(as.vector(sample_y))
 
@@ -14,27 +13,27 @@ cramer_von_mises <- function(sample_x, sample_y, plotting = FALSE, save_plot = F
   # unisco i campioni
   combinati <- c(sample_x, sample_y)
   # faccio un rango congiunto
-  ranked_sample <- rank(combinati)
+  ranked_sample <- rank(combinati, ties.method = "average")
   # separo i ranghi
   rank_x <- ranked_sample[1:n]
-  rank_y <- ranked_sample[(n+1):(n+m)]
+  rank_y <- ranked_sample[(n + 1):(n + m)]
 
   # Scommentare se serve parlare dei ranghi
   # print(cbind(sample_x, rank_x,sample_y, rank_y))
 
-  # Rappresenta la differenza fra i ranghi osservati e quelli teorici
-  U <- n * sum( (rank_x-(1:n))^2 ) + m * sum( (rank_y-(1:m))^2 )
+
+  U <- n * sum((rank_x - (1:n))^2) + m * sum((rank_y - (1:m))^2)
 
   # Distanza delle distribuzioni
-  W_squared <- U / ( n*m*(n+m) ) - ( (4*n*m) -1 ) / ( 6*(n+m) )
+  W_squared <- U / (n * m * (n + m)) - ((4 * n * m) - 1) / (6 * (n + m))
 
-  if(plotting == T){
+  if (plotting == T) {
     plotting_data_cvm(sample_x, sample_y, name_plot = name_plot, save_plot = save_plot)
   }
-  return (W_squared)
+  return(W_squared)
 }
 
-plotting_data_cvm <- function (sample_x, sample_y, save_plot = FALSE, name_plot = ""){
+plotting_data_cvm <- function(sample_x, sample_y, save_plot = FALSE, name_plot = "") {
   n <- length(sample_x)
   m <- length(sample_y)
 
@@ -48,17 +47,14 @@ plotting_data_cvm <- function (sample_x, sample_y, save_plot = FALSE, name_plot 
 
   # Stampa il plot
   print(p)
-   # Salva il plot
-  if(save_plot) {
+  # Salva il plot
+  if (save_plot) {
     # Costruisce il nome file con percorso
-    file_name <- if(name_plot != "") {
+    file_name <- if (name_plot != "") {
       paste0("10.2/plots/", name_plot, ".jpeg")
     } else {
       "10.2/plots/eCDF.jpeg"
     }
     ggsave(filename = file_name, plot = p, dpi = 320)
   }
-
 }
-
-
