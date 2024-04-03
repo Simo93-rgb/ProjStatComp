@@ -8,7 +8,7 @@ source("Datasets/plantGrowth.R")
 # distanza fra stessa dist
 res_l_l <- cramer_von_mises(linseed, linseed)
 # distanza fra soybean e linseed
-res_s_l <- cramer_von_mises(soybean, linseed, plotting = TRUE)
+res_s_l <- cramer_von_mises(linseed, soybean, plotting = TRUE)
 res_s_l_10 <- cramer_von_mises(s,l)
 
 # distanza fra soybean e casein

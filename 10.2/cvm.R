@@ -21,7 +21,6 @@ cramer_von_mises <- function(sample_x, sample_y, plotting = FALSE, save_plot = F
   # Scommentare se serve parlare dei ranghi
   # print(cbind(sample_x, rank_x,sample_y, rank_y))
 
-
   U <- n * sum((rank_x - (1:n))^2) + m * sum((rank_y - (1:m))^2)
 
   # Distanza delle distribuzioni
